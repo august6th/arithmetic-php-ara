@@ -35,6 +35,9 @@
  *
  */
 
+ $array = [123,45,678,35,64,99,0,12,999,435];
+ $string = 'string';
+
 function BubbleSort($container)
 {
     if (is_array($container)) {
@@ -54,8 +57,7 @@ function BubbleSort($container)
     }
 }
 
-$array = [123,45,678,35,64,99,0,12,999,435];
-$string = 'string';
+
 $array_sort = BubbleSort($array);
 $string_sort = BubbleSort($string);
 
@@ -63,3 +65,77 @@ echo "<pre>";
 print_r($array_sort);
 echo "</pre>";
 var_dump($string_sort);
+
+// 复习一遍！
+
+function BubbleSort_1(array $container)
+{
+    $count = count($container);
+    for ($j = 1; $j < $count - 1; $j++) {
+        for ($i = 0; $i < $count - $j; $i++) {
+            $a = $i + 1;
+            if($container[$i] > $container[$a]){
+                // $temp = $container[$i];
+                // $container[$i] = $container[$i + 1];
+                // $container[$i + 1] = $temp;
+                list($container[$i], $container[$a]) = array($container[$a], $container[$i]);
+            }
+        }
+    }
+    return $container;
+}
+
+$array_sort_1 = BubbleSort_1($array);
+
+echo "<pre>";
+print_r($array_sort_1);
+echo "</pre>";
+
+
+
+/**
+ * 冒泡排序 -- 方法二
+ * @param array $container
+ *
+ * 同样举例
+ * 数组 [20, 10, 7, 5]
+ * 共 4 个数
+ * 第一轮
+ * [索引]   0  1  2 3
+ * [数组]  20 10 7 5
+ *         -----
+ *         10 20 7 5
+ *         --   --
+ *         7 20 10 5
+ *         --      --
+ *         5 20 10 7
+ * （其他轮数不做描述）
+ *  每轮都会将对应的 $container[$i] 变为最小值，所以该索引下的数值不参与下一次比较。
+ *  和方法一相反的感觉，把小一些的数向下沉
+ *
+ *  复习一下list()函数
+ *  这段代码 list($container[$i], $container[$j]) = array($container[$j], $container[$i]);
+ *  其实等同于：
+ *  $container[$i] = $container[$j];
+ *  $container[$j] = $container[$i];
+ *  但是你不能这么写！！
+ */
+function BubbleSortV2(array $container)
+{
+    $count = count($container);
+    for ($i = 0; $i < $count - 1; $i++) {
+        for ($j = $i + 1; $j < $count; $j++) {
+            if ($container[$i] > $container[$j]) {
+                list($container[$i], $container[$j]) = array($container[$j], $container[$i]);
+            }
+        }
+    }
+
+    return $container;
+
+}
+
+$array_sort_v2 = BubbleSortV2($array);
+echo "<pre>";
+print_r($array_sort_v2);
+echo "</pre>";
